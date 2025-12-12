@@ -68,4 +68,5 @@ pipeline
            }
 
    }  //stages ending
+} // pipeline ending
 
