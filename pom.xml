@@ -104,7 +104,7 @@
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>KK FUNDA Snapshot Nexus Repository </name>
-	      <url>http://13.201.66.250:8081/repository/new-repo/</url>
+	      <url>http://13.204.66.237:8081/repository/shell_snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
