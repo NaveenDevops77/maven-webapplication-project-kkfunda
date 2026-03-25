@@ -47,7 +47,7 @@
 
 <header>
     <marquee> <h1> WELCOME TO KK DEVOPS </h1> </marquee>
-    <h3>Training | Development only no job guarantee | Consulting</h3>
+    <h3>Training | Development and also job conform | Consulting</h3>
 </header>
 
 <div class="container">
