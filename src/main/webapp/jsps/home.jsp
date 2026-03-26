@@ -47,7 +47,7 @@
 
 <header>
     <marquee> <h1> WELCOME TO KK DEVOPS </h1> </marquee>
-    <h3>Training | Development and also job conform program fro 5 months couser| Consulting</h3>
+    <h3>Training | Development and also job conform program fro 5 months couser dont miss| Consulting</h3>
 </header>
 
 <div class="container">
