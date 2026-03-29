@@ -1,0 +1,72 @@
+node {
+
+    // Get Maven tool
+    def mavenHome = tool name: "maven"
+
+    try {
+        // 🔔 Notify build started
+        notifyBuild('STARTED')
+
+        stage('Git Checkout') {
+            git branch: 'dev', url: 'https://github.com/kkdevopsb8/maven-webapplication-project-kkfunda.git'
+        }
+
+        stage('Compile') {
+            sh "${mavenHome}/bin/mvn compile"
+        }
+
+        stage('Build') {
+            sh "${mavenHome}/bin/mvn clean package"
+        }
+
+        stage('SonarQube Report') {
+            sh "${mavenHome}/bin/mvn sonar:sonar"
+        }
+
+        stage('Deploy to Nexus') {
+            sh "${mavenHome}/bin/mvn clean deploy"
+        }
+
+        stage('Deploy to Tomcat') {
+            withCredentials([usernamePassword(
+                credentialsId: 'tomcat-cred',
+                usernameVariable: 'TOMCAT_USER',
+                passwordVariable: 'TOMCAT_PASS'
+            )]) {
+                sh """
+                curl -sS -u $TOMCAT_USER:$TOMCAT_PASS \
+                -T target/*.war \
+                "http://43.205.230.133:8080/manager/text/deploy?path=/maven-web-application&update=true"
+                """
+            }
+        }
+
+        // 🔔 Notify build success
+        notifyBuild('SUCCESS')
+
+    } catch (Exception e) {
+        // 🔔 Notify build failure
+        notifyBuild('FAILURE')
+        throw e
+    }
+}
+
+// ------------------------------
+// Function to send Slack notifications
+// ------------------------------
+def notifyBuild(String buildStatus) {
+
+    // Default message if not passed
+    buildStatus = buildStatus ?: 'STARTED'
+
+    // Construct message
+    def color = buildStatus == 'SUCCESS' ? 'good' : buildStatus == 'FAILURE' ? 'danger' : 'warning'
+    def message = "*Build Status:* ${buildStatus}\n*Job:* ${env.JOB_NAME}\n*Build Number:* ${env.BUILD_NUMBER}\n*Branch:* ${env.BRANCH_NAME ?: 'N/A'}\n*URL:* ${env.BUILD_URL}"
+
+    // Send Slack message
+    slackSend(
+        channel: '#devops',    // Replace with your Slack channel
+        color: color,
+        message: message
+    )
+}
