@@ -20,8 +20,8 @@ node {
         }
 
         stage('SonarQube Report') 
-{
-sh "${mavenHome}/bin/mvn sonar:sonar"
+       {
+         sh "${mavenHome}/bin/mvn install sonar:sonar"
         }
 
         stage('Deploy to Nexus') {
