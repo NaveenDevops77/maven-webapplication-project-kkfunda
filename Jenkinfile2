@@ -1,0 +1,41 @@
+node {
+
+    def mavenHome = tool name: "maven"
+
+    // Add Maven to PATH
+    withEnv(["PATH+MAVEN=${mavenHome}/bin"]) {
+
+        stage('git checkout') {
+            git branch: 'dev', url: 'https://github.com/NaveenDevops77/maven-webapplication-project-kkfunda.git'
+        }
+
+        stage('compile') {
+            sh "mvn compile"
+        }
+
+        stage('build') {
+            sh "mvn clean package"
+        }
+
+        stage('sq report') {
+            sh "mvn clean install sonar:sonar"
+        }
+
+        stage('deploy nexus') {
+            sh "mvn clean deploy"
+        }
+
+        stage('Deploy to Tomcat') {
+            withCredentials([usernamePassword(
+                credentialsId: 'tomcat-cred', 
+                usernameVariable: 'TOMCAT_USER', 
+                passwordVariable: 'TOMCAT_PASS'
+            )]) {
+
+                sh """
+                curl -u $TOMCAT_USER:$TOMCAT_PASS -T target/*.war "http://13.235.51.32:8080/manager/text/deploy?path=/myapp&update=true"
+                """
+            }
+        }
+    }
+}
