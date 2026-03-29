@@ -19,8 +19,9 @@ node {
             sh "${mavenHome}/bin/mvn clean package"
         }
 
-        stage('SonarQube Report') {
-            sh "${mavenHome}/bin/mvn sonar:sonar"
+        stage('SonarQube Report') 
+{
+sh "${mavenHome}/bin/mvn clean install sonar:sonar"
         }
 
         stage('Deploy to Nexus') {
