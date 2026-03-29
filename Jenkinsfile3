@@ -21,7 +21,7 @@ node {
 
         stage('SonarQube Report') 
 {
-sh "${mavenHome}/bin/mvn clean install sonar:sonar"
+sh "${mavenHome}/bin/mvn sonar:sonar"
         }
 
         stage('Deploy to Nexus') {
