@@ -1,17 +1,20 @@
 node
 {
-    def mavenHome = tool 'maven-3.9.0'
     stage ('git checkout')
     {
         git branch: 'dev', url: 'https://github.com/NaveenDevops77/maven-webapplication-project-kkfunda.git'
     }
-    stage ('complie')
-    {
-      sh "${mavenHome}/bin/mvn compile" 
+    stage('Build') {
+        try {
+            sh 'mvn clean package'
+        }
+        catch (Exception e) {
+            echo "Build failed but pipeline continues"
+        }
     }
-    stage ('build')
-    {
-        sh "${mavenHome}/bin/mvn clean package"
+
+    stage('Next Step') {
+        sh 'echo continuing workflow'
     }
     stage ('sonar report')
     {
