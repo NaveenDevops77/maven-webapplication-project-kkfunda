@@ -12,7 +12,6 @@ node
             echo "Build failed but pipeline continues"
         }
     }
-
     stage('Next Step') {
         sh 'echo continuing workflow'
     }
