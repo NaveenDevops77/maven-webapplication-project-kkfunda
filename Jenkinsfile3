@@ -43,7 +43,7 @@ pipeline {
 
         withCredentials([
             usernamePassword(
-                credentialsId: 'tomcat-creds',
+                credentialsId: 'tomcatcred',
                 usernameVariable: 'TOMCAT_USER',
                 passwordVariable: 'TOMCAT_PASS'
             )
