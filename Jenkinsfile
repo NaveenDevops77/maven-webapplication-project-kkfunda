@@ -28,7 +28,7 @@ node
     {
     sh """
     curl -u naveen:Charish@9101112\
-    --upload-file /var/lib/jenkins/workspace/jio-airtel-MBPL_dev/target/maven-web-application.war\
+    --upload-file /var/lib/jenkins/workspace/airtel-jio-MBPL_dev/target/maven-web-application.war\
     "http://13.201.56.236:8080/manager/text/deploy?path=/maven-web-application&update=true"
      """
     }
