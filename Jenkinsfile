@@ -29,7 +29,7 @@ node
     sh """
     curl -u naveen:Charish@9101112\
     --upload-file /var/lib/jenkins/workspace/airtel_mbpl_dev/target/maven-web-application.war\
-    "http://3.110.181.253:8080//manager/text/deploy?path=/maven-web-application&update=true"
+    "http://13.201.56.236:8080/manager/text/deploy?path=/maven-web-application&update=true"
      """
     }
 }
