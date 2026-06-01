@@ -1,28 +1,41 @@
-node
-{
-    def mavenHome = tool 'maven-3.9.0'
-    stage('checkout')
+pipeline{
+    agent any
+    tools
     {
-        git branch: 'dev', url: 'https://github.com/NaveenDevops77/maven-webapplication-project-kkfunda.git'
+        maven 'maven-3.9.0'
     }
-    stage('build')
-    {
-      sh "${mavenHome}/bin/mvn package"
-    }
-    stage('generate report')
-    {
-        sh "${mavenHome}/bin/mvn clean package sonar:sonar"
-    }
-    stage('nexus report')
-    {
-        sh "${mavenHome}/bin/mvn deploy"
-    }
-    stage('deploy to container')
-    {
-      sh """
+    stages{
+        stage('chcekout')
+          {
+              steps
+              {
+                git branch: 'dev', url: 'https://github.com/NaveenDevops77/maven-webapplication-project-kkfunda.git'
+              }
+          }
+        stage('build')
+        {
+            steps
+            {
+                sh "mvn clean package"
+            }
+        }
+        stage('generate report')
+        {
+            steps
+            {
+                sh "mvn clean deploy sonar:sonar"
+            }
+        }
+        stage('deploy')
+        {
+            steps
+            {
+                sh """
     curl -u naveen:Charish@9101112\
     --upload-file /var/lib/jenkins/workspace/java-scripted-way-job/target/maven-web-application.war\
     "http://13.206.100.193:8080//manager/text/deploy?path=/maven-web-application&update=true"
      """
+            }
+        }
     }
 }
