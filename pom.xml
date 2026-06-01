@@ -104,7 +104,7 @@
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>KK FUNDA Snapshot Nexus Repository </name>
-	      <url>http://3.110.169.187:8081/repository/prod-repo/</url>
+	      <url>http://3.110.169.187:8081/repository/jiodev/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
