@@ -7,7 +7,7 @@ node
     }
     stage('build')
     {
-      sh "${mavenHome}/bin/mvn package
+      sh "${mavenHome}/bin/mvn package"
     }
     stage('generate report')
     {
