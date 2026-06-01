@@ -1,5 +1,8 @@
 pipeline{
-    agent any
+    agent 
+     {
+       label 'qas'
+      }
     tools
     {
         maven 'maven-3.9.0'
