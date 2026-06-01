@@ -11,7 +11,7 @@ node
     }
     stage('generate report')
     {
-        sh "${mavenHome}/bin/mvn clean package sonar:sonar
+        sh "${mavenHome}/bin/mvn clean package sonar:sonar"
     }
     stage('nexus report')
     {
