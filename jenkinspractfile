@@ -1,5 +1,8 @@
 pipeline{
-    agent any
+    agent 
+    {
+      label 'dev'
+    }
     tools
     {
         maven 'maven-3.9.0'
@@ -32,7 +35,7 @@ pipeline{
             {
                 sh """
     curl -u naveen:Charish@9101112\
-    --upload-file /var/lib/jenkins/workspace/java-scripted-way-job/target/maven-web-application.war\
+    --upload-file /home/ec2-user/node1/workspace/java-scripted-way-job/target/maven-web-application.war\                                               
     "http://13.206.100.193:8080//manager/text/deploy?path=/maven-web-application&update=true"
      """
             }
