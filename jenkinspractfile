@@ -23,7 +23,7 @@ pipeline{
         {
             steps
             {
-                sh "mvn clean package sonar:sonar"
+                sh "mvn clean deploy sonar:sonar"
             }
         }
         stage('deploy')
