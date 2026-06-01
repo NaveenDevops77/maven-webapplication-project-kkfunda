@@ -34,8 +34,8 @@ pipeline{
             steps
             {
                 sh """
-    curl -u naveen:Charish@9101112\
-    --upload-file /home/ec2-user/node1/workspace/java-scripted-way-job/target/maven-web-application.war\                                               
+    curl -u naveen:Charish@9101112 \
+    --upload-file /home/ec2-user/node1/workspace/java-scripted-way-job/target/maven-web-application.war \                                               
     "http://13.206.100.193:8080//manager/text/deploy?path=/maven-web-application&update=true"
      """
             }
