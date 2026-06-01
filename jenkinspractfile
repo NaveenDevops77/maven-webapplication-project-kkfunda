@@ -1,0 +1,28 @@
+node
+{
+    def mavenHome = tool '3.9.0'
+    stage('checkout')
+    {
+        git branch: 'dev', url: 'https://github.com/NaveenDevops77/maven-webapplication-project-kkfunda.git'
+    }
+    stage('build')
+    {
+      sh "${mavenHome}/bin/mvn package
+    }
+    stage('generate report')
+    {
+        sh "${mavenHome}/bin/mvn clean package sonar:sonar
+    }
+    stage('nexus report')
+    {
+        sh "${mavenHome}/bin/mvn deploy"
+    }
+    stage('deploy to container')
+    {
+      sh """
+    curl -u naveen:Charish@9101112\
+    --upload-file /var/lib/jenkins/workspace/airtel-jio-MBPL_dev/target/maven-web-application.war\
+    "http://13.206.100.193:8080//manager/text/deploy?path=/maven-web-application&update=true"
+     """
+    }
+}
