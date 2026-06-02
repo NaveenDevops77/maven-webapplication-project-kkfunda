@@ -1,3 +1,4 @@
+@Library('mylib')_
 pipeline
 {
     agent any
@@ -52,4 +53,16 @@ pipeline
             }
         }
     }
+    post{
+       success{
+            script{
+                    SlackNotifications(currentBuild.result)
+                   }
+               }
+        failure{
+              script{
+                    SlackNotifications(currentBuild.result)
+                     }
+                 }
+           }
 }
