@@ -1,44 +1,68 @@
-pipeline{
-    agent 
-    {
-      label 'dev'
-    }
+pipeline
+{
+    agent any
     tools
     {
-        maven 'maven-3.9.0'
+      maven "maven-3.9.0"
     }
-    stages{
-        stage('chcekout')
-          {
-              steps
-              {
+    stages
+    {
+        stage ('checkout')
+        {
+            steps
+            {
                 git branch: 'dev', url: 'https://github.com/NaveenDevops77/maven-webapplication-project-kkfunda.git'
-              }
-          }
-        stage('build')
-        {
-            steps
-            {
-                sh "mvn clean install"
             }
         }
-        stage('generate report')
+        stage ('compile')
         {
             steps
             {
-                sh "mvn clean deploy"
+                sh "mvn clean compile"
+            }
+        } 
+        stage('build and sonar report')
+         {
+            parllel{
+                stage('build')
+                   {
+                      steps
+                       {
+                          sh "mvn clean package"
+                        }
+                     }
+                   stage('sonar')
+                     {
+                        steps
+                          {
+                              sh "mvn package sonar:sonar"
+                           }
+                     }
+                 }
+            }
+            
+        stage ('move to nexus')
+        {
+            steps
+            {
+               sh "mvn clean deploy"
             }
         }
-        stage('deploy')
+        stage ('deploy to tomcat')
         {
             steps
             {
-                sh """
-    curl -u naveen:Charish@9101112\
-    --upload-file /home/ec2-user/node1/workspace/java-scripted-way-job/target/maven-web-application.war\
-     "http://13.206.100.193:8080//manager/text/deploy?path=/maven-web-application&update=true"
-     """
+                sh '''  curl -u naveen:Charish@9101112 \
+            --upload-file /var/lib/jenkins/workspace/java-scripted-way-job/target/maven-web-application.war \
+            "http://13.206.71.179:8080/manager/text/deploy?path=/maven-web-application&update=true" '''
             }
+        }
+        stage ('amazon-qa')
+        {
+           steps
+              {
+                 build job: 'amazon-qa'
+               }
         }
     }
 }
