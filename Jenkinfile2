@@ -47,7 +47,7 @@ pipeline
             steps
             {
                 sh '''  curl -u naveen:Charish@9101112 \
-            --upload-file /var/lib/jenkins/workspace/java-declartaive-way-pipeline/target/maven-web-application.war \
+            --upload-file /var/lib/jenkins/workspace/java-scripted-way-job/target/maven-web-application.war \
             "http://13.206.71.179:8080/manager/text/deploy?path=/maven-web-application&update=true" '''
             }
         }
