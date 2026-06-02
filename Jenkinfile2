@@ -26,21 +26,30 @@ pipeline
         {
             steps
             {
-                sh "mvn clean package"
+                script
+                  {
+                     mvn.build()
+                  }
             }
         }
         stage ('generate report')
            {
             steps
              {
-                sh "mvn clean package sonar:sonar"
+                script
+                   {
+                      mvn.sonar()
+                   }
              }
            }
         stage ('move to nexus')
         {
             steps
             {
-               sh "mvn clean deploy"
+               script
+                    {
+                        mvn.deploy()
+                     }
             }
         }
         stage ('deploy to tomcat')
