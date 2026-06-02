@@ -23,7 +23,7 @@ pipeline
         } 
         stage('build and sonar report')
          {
-            parllel{
+            parallel{
                 stage('build')
                    {
                       steps
