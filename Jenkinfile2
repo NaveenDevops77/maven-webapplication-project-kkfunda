@@ -51,7 +51,7 @@ pipeline
             "http://13.206.71.179:8080/manager/text/deploy?path=/maven-web-application&update=true" '''
             }
         }
-        stage (amazon-qa)
+        stage ('amazon-qa')
         {
            steps
               {
